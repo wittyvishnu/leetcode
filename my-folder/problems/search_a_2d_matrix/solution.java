@@ -5,7 +5,7 @@ class Solution {
 
         int row = RowCheck(matrix, target, m, n);
 
-        if (row == -1) return false; // target not in any row ✅
+        if (row == -1) return false; 
 
         return ColCheck(matrix, row, target, n);
     }
@@ -16,14 +16,14 @@ class Solution {
             int mid = (low + high) / 2;
 
             if (matrix[mid][0] <= target && target <= matrix[mid][n - 1]) {
-                return mid; // found the correct row
+                return mid; 
             } else if (target < matrix[mid][0]) {
                 high = mid - 1;
             } else {
                 low = mid + 1;
             }
         }
-        return -1; // no row contains target
+        return -1; 
     }
 
     public boolean ColCheck(int[][] matrix, int row, int target, int n) {
