@@ -7,15 +7,15 @@ class Solution {
         Deque<Integer> dq = new ArrayDeque<>();
 
         for(int i=0;i<n;i++){
-            if(!dq.isEmpty() && dq.peekFirst()<=i-k)
+            if(!dq.isEmpty()&&i>k-1&& dq.peekFirst()<i-k+1)
             dq.pollFirst();
-            while(!dq.isEmpty() && nums[dq.peekLast()]<=nums[i])
+            while(!dq.isEmpty()&&nums[dq.peekLast()]<=nums[i])
             dq.pollLast();
             dq.offerLast(i);
+            if(i>=k-1)
+            result[i-k+1]=nums[dq.peekFirst()];
+            
 
-            if(i>=k-1){
-                result[i-k+1]=nums[dq.peekFirst()];
-            }
         }
         return result;
     }
