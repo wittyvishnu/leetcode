@@ -2,46 +2,34 @@ class Solution {
     public String reverseWords(String s) {
         char[] arr = s.toCharArray();
         int n = arr.length;
+        StringBuilder ans=new StringBuilder();
+        StringBuilder temp=new StringBuilder();
+        int index=0;
+        while(arr[index]==' ')
+        index++;
+        for(int i=index;i<n;i++){
+            if(arr[i]==' '){
+                while(i+1<n&&arr[i+1]==' ')i++;
+                ans.insert(0, " ");
+                ans.insert(0,temp);
+                temp.setLength(0);
+            }else{
+                temp.append(arr[i]);
 
-        // Step 1: Reverse the whole string
-        reverse(arr, 0, n - 1);
-
-        // Step 2: Reverse each word
-        int start = 0;
-        for (int end = 0; end <= n; end++) {
-            if (end == n || arr[end] == ' ') {
-                reverse(arr, start, end - 1);
-                start = end + 1;
             }
+
+        }
+        if(temp.length()>0){
+            ans.insert(0, " ");
+            ans.insert(0,temp);
         }
 
-        // Step 3: Clean up spaces (remove extra spaces)
-        return cleanSpaces(arr, n);
-    }
-
-    // Helper: Reverse characters from left to right
-    private void reverse(char[] arr, int left, int right) {
-        while (left < right) {
-            char temp = arr[left];
-            arr[left] = arr[right];
-            arr[right] = temp;
-            left++;
-            right--;
+        if (ans.length() > 0) {
+            return ans.substring(0, ans.length() - 1);
+        } else {
+            return ""; 
         }
-    }
 
-    // Helper: Remove leading, trailing, and extra spaces
-    private String cleanSpaces(char[] arr, int n) {
-        int i = 0, j = 0;
-        while (i < n) {
-            // skip spaces
-            while (i < n && arr[i] == ' ') i++;
-            // copy word
-            while (i < n && arr[i] != ' ') arr[j++] = arr[i++];
-            // add single space if next word exists
-            while (i < n && arr[i] == ' ') i++;
-            if (i < n) arr[j++] = ' ';
-        }
-        return new String(arr, 0, j);
+        
     }
 }
