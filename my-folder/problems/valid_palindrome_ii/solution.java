@@ -1,22 +1,23 @@
 class Solution {
     public boolean validPalindrome(String s) {
-        int i = 0, j = s.length() - 1;
-
-        while (i < j) {
-            if (s.charAt(i) != s.charAt(j)) {
-                return isPalindrome(s, i + 1, j) || isPalindrome(s, i, j - 1);
+        char[] arr=s.toCharArray();
+        int len=arr.length;
+        int i=0,j=len-1;
+        while(i<j){
+            if(arr[i]!=arr[j]){
+                return isPalindrome(arr,i+1,j)|| isPalindrome(arr,i,j-1);
             }
             i++;
             j--;
         }
         return true;
     }
-
-    private boolean isPalindrome(String s, int left, int right) {
-        while (left < right) {
-            if (s.charAt(left) != s.charAt(right)) return false;
-            left++;
-            right--;
+    public boolean isPalindrome(char[] arr,int start,int end){
+        while(start<end){
+            if(arr[start]!=arr[end])
+            return false;
+            start++;
+            end--;
         }
         return true;
     }
