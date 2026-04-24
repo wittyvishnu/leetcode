@@ -6,10 +6,10 @@ class Solution {
             int mid=(low+high)/2;
 
             if(nums[low]<=nums[mid]){
-                ans=ans>nums[low]?nums[low]:ans;
+                ans=Math.min(ans,nums[low]);
                 low=mid+1;
             }else{
-                 ans=ans>nums[mid]?nums[mid]:ans;
+                 ans=Math.min(ans,nums[mid]);
                  high=mid-1;
                 
             }
