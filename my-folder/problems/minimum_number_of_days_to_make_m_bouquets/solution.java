@@ -7,30 +7,33 @@ class Solution {
             min=Math.min(min,bloomDay[i]);
             max=Math.max(max,bloomDay[i]);
         }
-        int mid;
-        int m_total=0;
-        int k_total=0;
-        while(min<max){
-            mid=(min+max)/2;
-            m_total=0;
-            k_total=0;
-            for(int i=0;i<n;i++){
-                if(bloomDay[i]<=mid){
-                    k_total++;
-                    if(k_total==k){
-                        m_total++;
-                        k_total=0;
-                    }
-                        
-                }
-                else
-                k_total=0;
-        
+        int ans=max;
+        while(min<=max){
+            int mid=(min+max)/2;
+            int bouquets=possible(bloomDay,mid,k);
+            if(bouquets>=m){
+                ans=mid;
+                max=mid-1;
 
-            }
-            if(m_total<m)min=mid+1;
-            else max=mid;
+            }else min=mid+1;
+            
+
         }
-        return min;
+        return ans;
+    }
+    public int possible(int[] bloomDay,int n,int k){
+        int bouquets=0;
+        int count=0;
+        for(int i=0;i<bloomDay.length;i++){
+            if(bloomDay[i]<=n)
+            count++;
+            else{
+                bouquets+=(count/k);
+                count=0;
+            }
+        
+        }
+        bouquets += (count / k);
+        return bouquets;
     }
 }
