@@ -3,10 +3,12 @@ class Solution {
         int op=0,cl=0;
         for(char ch:s.toCharArray()){
             if(ch=='(')op++;
-            else if(ch==')' && op>0) op--;
-            else cl++;
-            
+            else{
+                if(op>0)op--;
+                else cl++;
+            }
         }
         return op+cl;
+        
     }
 }
