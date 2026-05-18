@@ -19,13 +19,13 @@ class Solution {
         inverse(root);
         return root;
     }
-    public void inverse(TreeNode p){
-        if(p==null)return;
-        TreeNode temp=p.left;
-        p.left=p.right;
-        p.right=temp;
-        inverse(p.left);
-        inverse(p.right);
-
+    public void inverse(TreeNode root){
+        if(root==null)return;
+        TreeNode left=root.left;
+        TreeNode right=root.right;
+        root.left=right;
+        root.right=left;
+        inverse(right);
+        inverse(left);
     }
 }
