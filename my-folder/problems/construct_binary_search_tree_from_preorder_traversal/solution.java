@@ -15,20 +15,22 @@
  */
 class Solution {
     public TreeNode bstFromPreorder(int[] preorder) {
-        TreeNode root=construct(preorder,0,preorder.length-1);
-        return root;
+        if (preorder.length==0) return null;
+        return construct(preorder,0,preorder.length-1);
     }
     public TreeNode construct(int[] preorder,int start,int end){
-    if(start>end)return null;
-    TreeNode root=new TreeNode(preorder[start]);
-    int index=end+1;
-    for(int i=start+1;i<=end;i++)
-    if(preorder[i]>root.val){
-        index=i;
-        break;
-    }
-    root.left=construct(preorder,start+1,index-1);
-    root.right=construct(preorder,index,end);
-    return root;
+        if(start>end)return null;
+        TreeNode root=new TreeNode(preorder[start]);
+        int numsLeft=end-start;
+        for(int i=start+1;i<=end;i++){
+            if(preorder[i]>preorder[start]){
+                numsLeft=i-start-1;
+                break;
+            }
+        }
+        root.left=construct(preorder,start+1,start+numsLeft);
+        root.right=construct(preorder,start+numsLeft+1,end);
+        return root;
+        
     }
 }
