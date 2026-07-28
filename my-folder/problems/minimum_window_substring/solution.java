@@ -1,26 +1,30 @@
 class Solution {
     public String minWindow(String s, String t) {
-        if(s.length()==0 || t.length()==0)return "";
-        int[] hash=new int[256];
-        int l=0,r=0,count=0,minlength=Integer.MAX_VALUE,startIndex = -1;
-        int m=s.length(),n=t.length();
-        for(char c:t.toCharArray())
-        hash[c]++;
-       while(r<m){
-        if(hash[s.charAt(r)]>0)count++;
-        hash[s.charAt(r)]--;
-        r++;
-        while(count==n){
-            if(r-l<minlength){
-                minlength=r-l;
-                startIndex=l;
+        if(s.length()<t.length())return "";
+        HashMap<Character,Integer> need=new  HashMap<>();
+        HashMap<Character,Integer> freq=new  HashMap<>();
+        for(char ch:t.toCharArray())
+        need.put(ch,need.getOrDefault(ch,0)+1);
+        int min=Integer.MAX_VALUE;
+        int matched=0;
+        int startIndex=0;
+        int l=0,r=0;
+        while(r<s.length()){
+            char ch=s.charAt(r);
+            freq.put(ch,freq.getOrDefault(ch,0)+1);
+            if(need.containsKey(ch)&&freq.get(ch)<=need.get(ch))matched++;
+            r++;
+            while(matched==t.length()){
+                if(min>r-l+1){
+                    startIndex=l;
+                    min=r-l+1;
+                }
+                char c=s.charAt(l);
+                freq.put(c,freq.getOrDefault(c,0)-1);
+                if(need.containsKey(c)&&freq.get(c)<need.get(c))matched--;
+                l++;
             }
-            hash[s.charAt(l)]++;
-            if(hash[s.charAt(l)]>0)count--;
-            l++;
-
         }
-       }
-       return (startIndex == -1) ? "" : s.substring(startIndex, startIndex + minlength);
+        return (min==Integer.MAX_VALUE)?"":s.substring(startIndex,startIndex+min-1);
     }
 }
