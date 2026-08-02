@@ -1,29 +1,30 @@
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
-        int n=nums.length;
-       HashMap<Integer,Integer> map=new HashMap<>();
-       List<List<Integer>> bucket=new ArrayList<>(n+1);
-       for(int num:nums)
-       map.put(num,map.getOrDefault(num,0)+1);
-        for (int i = 0; i <= n; i++) 
-        bucket.add(null);
-        for(Integer key:map.keySet()){
-        int freq=map.get(key);
-        if(bucket.get(freq)==null)
-        bucket.set(freq,new ArrayList<>());
-        bucket.get(freq).add(key);
-    }
-        int[] ans = new int[k];
-        int idx = 0;
-        for (int i = n; i >= 0 && idx < k; i--) {
-            if (bucket.get(i) != null)
-                for (int num : bucket.get(i)) {
-                    ans[idx++] = num;
-                    if (idx == k) break;
-                }
-            
+        int[] ans=new int[k];
+        HashMap<Integer,Integer> map=new HashMap<>();
+        int maxLen=0;
+        for(int num:nums){
+            int freq=map.getOrDefault(num,0);
+            maxLen=Math.max(freq+1,maxLen);
+            map.put(num,freq+1);
         }
-        
+        ArrayList<ArrayList<Integer>> bucket=new ArrayList<>();
+        for(int i=0;i<=maxLen;i++)
+        bucket.add(new ArrayList<>());
+        for(int key:map.keySet())
+        bucket.get(map.get(key)).add(key);
+        int idx=k-1;
+
+        while(idx>=0){
+            for(int i=maxLen;i>0&&idx>=0;i--){
+                
+                for(int j=0;j<bucket.get(i).size()&&idx>=0;j++)
+                ans[idx--]=bucket.get(i).get(j);
+            }
+        }
+
         return ans;
+
+        
     }
 }
