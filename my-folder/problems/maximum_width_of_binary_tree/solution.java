@@ -13,24 +13,32 @@
  *     }
  * }
  */
+class pair{
+    TreeNode node;
+    int v;
+    pair(TreeNode n,int ve){
+        node=n;
+        v=ve;
+    }
+}
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
-        int max=0;
-        Deque<Pair<TreeNode,Integer>> dq=new ArrayDeque<>();
-        if(root==null)return max;
-        dq.offer(new Pair<>(root,1));
+        if(root==null)return 0;
+        int maxWidth=1;
+        Deque<pair> dq=new ArrayDeque<>();
+        dq.offer(new pair(root,1));
         while(!dq.isEmpty()){
-            int width=dq.peekLast().getValue()-dq.peekFirst().getValue()+1;
-            max=(max<width)?width:max;
+            maxWidth=Math.max(maxWidth,dq.peekLast().v-dq.peekFirst().v+1);
             int size=dq.size();
             for(int i=1;i<=size;i++){
-                Pair<TreeNode,Integer> temp=dq.pollFirst();
-                if(temp.getKey().left!=null) dq.offerLast(new Pair<>(temp.getKey().left,temp.getValue()*2));
-                if(temp.getKey().right!=null) dq.offerLast(new Pair<>(temp.getKey().right,temp.getValue()*2+1));
-
+                pair temp=dq.poll();
+                TreeNode node=temp.node;
+                if(node.left!=null)dq.offer(new pair(node.left,2*temp.v));
+                if(node.right!=null)dq.offer(new pair(node.right,2*temp.v+1));
             }
-
         }
-        return max;
+        return maxWidth;
+        
+        
     }
 }
