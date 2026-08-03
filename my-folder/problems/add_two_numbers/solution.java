@@ -14,35 +14,33 @@ class Solution {
         ListNode temp=dummy;
         int carry=0;
         while(l1!=null&&l2!=null){
-            int sum=l1.val+l2.val+carry;
+            int sum=carry+l1.val+l2.val;
             l1=l1.next;
             l2=l2.next;
-            ListNode node=new ListNode(sum%10);
+            ListNode current=new ListNode(sum%10);
             carry=sum/10;
-            temp.next=node;
-            temp=node;          
+            temp.next=current;
+            temp=current;
+            
         }
         while(l1!=null){
-            int sum=l1.val+carry;
+            int sum=carry+l1.val;
             l1=l1.next;
-            ListNode node=new ListNode(sum%10);
+            ListNode current=new ListNode(sum%10);
             carry=sum/10;
-            temp.next=node;
-            temp=node;          
+            temp.next=current;
+            temp=current;
         }
-          while(l2!=null){
-            int sum=l2.val+carry;
+        while(l2!=null){
+            int sum=carry+l2.val;
             l2=l2.next;
-            ListNode node=new ListNode(sum%10);
+            ListNode current=new ListNode(sum%10);
             carry=sum/10;
-            temp.next=node;
-            temp=node;          
+            temp.next=current;
+            temp=current;
         }
-        if(carry>0){
-            ListNode node=new ListNode(carry);
-            temp.next=node;
-        }
+        if(carry!=0)
+        temp.next=new ListNode(carry);
         return dummy.next;
-
     }
 }
